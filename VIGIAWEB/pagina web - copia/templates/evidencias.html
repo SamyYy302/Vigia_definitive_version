@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIGIA - Evidencias</title>
+    <!-- Fuente moderna desde Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #120419;
+            --accent-color: #FC75FF;
+            --accent-glow: rgba(252, 117, 255, 0.15);
+            --card-bg: rgba(252, 117, 255, 0.03);
+            --card-border: rgba(252, 117, 255, 0.15);
+            --text-muted: #c89beb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Luces ambientales en el fondo */
+        .ambient-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(252, 117, 255, 0.12) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(183, 64, 255, 0.1) 0%, rgba(0,0,0,0) 70%);
+            top: 60%;
+            right: 10%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* BARRA DE NAVEGACIÓN (HEADER CON PESTAÑAS) */
+        .navbar {
+            width: 100%;
+            background: rgba(18, 4, 25, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-logo-img {
+            width: 45px;
+            height: auto;
+            filter: drop-shadow(0 2px 8px rgba(252, 117, 255, 0.3));
+            transition: transform 0.2s ease;
+        }
+
+        .nav-brand:hover .nav-logo-img {
+            transform: scale(1.1);
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(252, 117, 255, 0.3);
+        }
+
+        .nav-tabs {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-tab-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            display: inline-block;
+        }
+
+        .nav-tab-link:hover, .nav-tab-link.active {
+            color: var(--accent-color);
+            text-shadow: 0 0 12px rgba(252, 117, 255, 0.6);
+        }
+
+        /* ESTILOS PARA EL MENÚ DESPLEGABLE TIPO NUBE */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(18, 4, 25, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            min-width: 200px;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(252, 117, 255, 0.2);
+            padding: 10px 0;
+            z-index: 200;
+            margin-top: 10px;
+        }
+
+        /* Pequeña flecha superior simulando nube */
+        .dropdown-content::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 12px;
+            height: 12px;
+            background: rgba(18, 4, 25, 0.95);
+            border-left: 1px solid var(--card-border);
+            border-top: 1px solid var(--card-border);
+        }
+
+        .dropdown-content a {
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: capitalize;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(252, 117, 255, 0.15);
+            color: var(--accent-color);
+        }
+
+        /* Mostrar nube al pasar el cursor */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* SECCIÓN DE EVIDENCIAS */
+        .evidences-container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px 100px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .evidences-title {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--accent-color);
+            text-shadow: 0 0 20px rgba(252, 117, 255, 0.4);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .evidences-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        /* Galería / Grid de Imágenes */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+
+        .gallery-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(252, 117, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(252, 117, 255, 0.2);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .gallery-caption {
+            padding: 20px;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #e0e0e0;
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .nav-tab-link {
+                font-size: 1rem;
+            }
+
+            .evidences-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Archivo de Audio -->
+    <audio id="catSound" src="gato.mp3" preload="auto"></audio>
+
+    <!-- Fondos de brillo ambiental -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Barra de Navegación con Pestañas -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand" id="logoBtn">
+            <img src="vigia-removebg-preview.png" alt="Logo VIGIA" class="nav-logo-img">
+            <span class="nav-title">VIGIA</span>
+        </a>
+        <ul class="nav-tabs">
+            <li><a href="index.html" class="nav-tab-link">Inicio</a></li>
+            <li><a href="autores.html" class="nav-tab-link">Autores</a></li>
+            <li><a href="evidencias.html" class="nav-tab-link active">Evidencias</a></li>
+            
+            <!-- Menú desplegable tipo nube con los nuevos términos -->
+            <li class="dropdown">
+                <a href="#" class="nav-tab-link">Más opciones ▾</a>
+                <div class="dropdown-content">
+                    <a href="lema.html">Lema</a>
+                    <a href="logo.html">Logo</a>
+                    <a href="texto_proyecto.html">Texto del proyecto</a>
+                    <a href="prototipo_real.html">Prototipo real</a>
+                    <a href="base_datos.html">Base de datos</a>
+                </div>
+            </li>
+
+            <li><a href="index.html#contacto" class="nav-tab-link">Contactanos</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sección de Evidencias -->
+    <main class="evidences-container">
+        <h1 class="evidences-title">Evidencias del Proyecto</h1>
+        <p class="evidences-subtitle">Registro fotográfico del desarrollo y prototipado del dispositivo de monitoreo.</p>
+
+        <div class="gallery-grid">
+            <!-- Evidencia 1 -->
+            <div class="gallery-card">
+                <img src="vigia1.jpeg" alt="Montaje del sensor y cámara" class="gallery-img">
+                <div class="gallery-caption">Primer plano del montaje de la cámara dentro de la estructura.</div>
+            </div>
+
+            <!-- Evidencia 2 -->
+            <div class="gallery-card">
+                <img src="evidencia2.jpeg" alt="Estructura del prototipo" class="gallery-img">
+                <div class="gallery-caption">Vista completa del dispositivo prototipo ensamblado.</div>
+            </div>
+
+            <!-- Evidencia 3 -->
+            <div class="gallery-card">
+                <img src="evidencia3.jpeg" alt="Ajustes frontales" class="gallery-img">
+                <div class="gallery-caption">Detalle frontal del acabado y prueba de encuadre.</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Script JavaScript para reproducir el audio al hacer clic -->
+    <script>
+        const logoBtn = document.getElementById('logoBtn');
+        const catSound = document.getElementById('catSound');
+
+        logoBtn.addEventListener('click', () => {
+            catSound.currentTime = 0;
+            catSound.play().catch(error => {
+                console.log("Error al reproducir audio:", error);
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIGIA - Prototipo Real</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #120419;
+            --accent-color: #FC75FF;
+            --card-bg: rgba(252, 117, 255, 0.03);
+            --card-border: rgba(252, 117, 255, 0.15);
+            --text-muted: #c89beb;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-color); color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; overflow-x: hidden; }
+        .ambient-glow { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(252, 117, 255, 0.12) 0%, rgba(0,0,0,0) 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0; pointer-events: none; }
+        
+        .navbar { width: 100%; background: rgba(18, 4, 25, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 100; padding: 15px 40px; display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .nav-logo-img { width: 45px; height: auto; }
+        .nav-title { font-size: 1.5rem; font-weight: 700; letter-spacing: 3px; color: var(--accent-color); }
+        .nav-tabs { display: flex; align-items: center; gap: 28px; list-style: none; }
+        .nav-tab-link { color: #ffffff; text-decoration: none; font-size: 1.15rem; font-weight: 600; transition: color 0.2s; }
+        .nav-tab-link:hover, .nav-tab-link.active { color: var(--accent-color); }
+        
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(18, 4, 25, 0.95); backdrop-filter: blur(16px); min-width: 200px; border: 1px solid var(--card-border); border-radius: 14px; padding: 10px 0; margin-top: 10px; }
+        .dropdown-content::before { content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 12px; height: 12px; background: rgba(18, 4, 25, 0.95); border-left: 1px solid var(--card-border); border-top: 1px solid var(--card-border); }
+        .dropdown-content a { color: #ffffff; padding: 10px 20px; text-decoration: none; display: block; font-size: 1rem; }
+        .dropdown-content a:hover { background: rgba(252, 117, 255, 0.15); color: var(--accent-color); }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .content-container { position: relative; z-index: 1; max-width: 1100px; width: 100%; padding: 80px 20px; display: flex; flex-direction: column; align-items: center; }
+        .page-title { font-size: 2.5rem; font-weight: 700; color: var(--accent-color); margin-bottom: 10px; letter-spacing: 3px; text-align: center; }
+        .subtitle { color: var(--text-muted); margin-bottom: 40px; text-align: center; }
+        
+        .prototype-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; }
+        .prototype-card { background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(16px); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .prototype-img { width: 100%; height: 260px; object-fit: cover; border-bottom: 1px solid var(--card-border); }
+        .card-info { padding: 20px; }
+        .card-info h3 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.2rem; }
+        .card-info p { color: #e0e0e0; font-size: 0.95rem; line-height: 1.6; }
+        @media (max-width: 768px) { .navbar { flex-direction: column; gap: 15px; } }
+    </style>
+</head>
+<body>
+    <audio id="catSound" src="gato.mp3" preload="auto"></audio>
+    <div class="ambient-glow"></div>
+
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand" id="logoBtn">
+            <img src="vigia-removebg-preview.png" alt="Logo VIGIA" class="nav-logo-img">
+            <span class="nav-title">VIGIA</span>
+        </a>
+        <ul class="nav-tabs">
+            <li><a href="index.html" class="nav-tab-link">Inicio</a></li>
+            <li><a href="autores.html" class="nav-tab-link">Autores</a></li>
+            <li><a href="evidencias.html" class="nav-tab-link">Evidencias</a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-tab-link active">Más opciones ▾</a>
+                <div class="dropdown-content">
+                    <a href="lema.html">Lema</a>
+                    <a href="logo.html">Logo</a>
+                    <a href="texto_proyecto.html">Texto del proyecto</a>
+                    <a href="prototipo_real.html">Prototipo real</a>
+                    <a href="base_datos.html">Base de datos</a>
+                </div>
+            </li>
+            <li><a href="index.html#contacto" class="nav-tab-link">Contactanos</a></li>
+        </ul>
+    </nav>
+
+    <main class="content-container">
+        <h1 class="page-title">PROTOTIPO REAL</h1>
+        <p class="subtitle">Demostración del hardware ensamblado y funcionamiento práctico del sistema.</p>
+
+        <div class="prototype-grid">
+            <div class="prototype-card">
+                <img src="vigia1.jpeg" alt="Frente del prototipo" class="prototype-img">
+                <div class="card-info">
+                    <h3>Ensamble de la Cámara Logitech</h3>
+                    <p>Módulo de captura integrado en la carcasa con forma customizada para fijación segura.</p>
+                </div>
+            </div>
+
+            <div class="prototype-card">
+                <img src="evidencia2.jpeg" alt="Vista lateral del prototipo" class="prototype-img">
+                <div class="prototype-img" style="background:#1e0828; display:flex; align-items:center; justify-content:center; color:var(--text-muted);">
+                    <img src="evidencia2.jpeg" alt="Estructura Completa" class="prototype-img">
+                </div>
+                <div class="card-info">
+                    <h3>Estructura Completa</h3>
+                    <p>Acabado pintado y modelado a mano con detalles visuales del felino característico.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const logoBtn = document.getElementById('logoBtn');
+        const catSound = document.getElementById('catSound');
+        logoBtn.addEventListener('click', () => { catSound.currentTime = 0; catSound.play().catch(e => console.log(e)); });
+    </script>
+</body>
+</html>
